@@ -16,16 +16,20 @@ interface BoardComponentProps {
 function Board(props: BoardComponentProps) {
   console.log('Board props', props);
 
-  function generateCells(props: BoardComponentProps) {
+  function generateCells() {
     let cellComponents = [];
     for (var i = 0; i < props.board.data.length; i++) {
       for (var j = 0; j < props.board.data[i].length; j++) {
         const cell = props.board.data[i][j];
         cellComponents.push(
-          <TouchableOpacity
-            onPress={() => onCellPressed({x: cell.x, y: cell.y}, props)}>
-            <Text style={styles.cell}>{cell.marked ? 'X' : ' '}</Text>
-          </TouchableOpacity>,
+          cell.marked ? (
+            <Text style={styles.cell}>{cell.value === 1 ? 'O' : 'X'}</Text>
+          ) : (
+            <TouchableOpacity
+              onPress={() => onCellPressed({x: cell.x, y: cell.y}, props)}>
+              <Text style={styles.cell} />
+            </TouchableOpacity>
+          ),
         );
       }
     }
@@ -43,7 +47,7 @@ function Board(props: BoardComponentProps) {
     const cell = {x: x, y: y, value: currentPlayer.id, marked: true};
     board.data[x][y] = cell;
     props.markBoard(board);
-    // setBoard(board);
+    props.changePlayer(currentPlayer);
   }
 
   return (
@@ -51,7 +55,7 @@ function Board(props: BoardComponentProps) {
       <FlatList
         contentContainerStyle={styles.grid}
         numColumns={3}
-        data={generateCells(props)}
+        data={generateCells()}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => {
           return item;

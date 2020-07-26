@@ -28,6 +28,9 @@ export function initializeGame(): GameActionTypes {
 }
 
 export function changePlayer(currentPlayer: Player): GameActionTypes {
+  if (currentPlayer.next !== undefined) {
+    currentPlayer = currentPlayer.next;
+  }
   return {
     type: ActionTypes.CHANGE_PLAYER,
     payload: currentPlayer,

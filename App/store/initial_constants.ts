@@ -1,4 +1,4 @@
-import {GameState, BoardState, BoardProps, Player, PlayerNode} from './types';
+import {GameState, BoardState, BoardProps, Player} from './types';
 
 export const BOARD_HEIGHT = 3;
 export const BOARD_WIDTH = 3;
@@ -17,7 +17,7 @@ export const INITIAL_BOARD_STATE: BoardState = {
   data: initializeBoardState({width: BOARD_WIDTH, height: BOARD_HEIGHT}),
 };
 
-function initializeBoardState({width, height}: BoardProps) {
+export function initializeBoardState({width, height}: BoardProps) {
   let board = [];
   for (var i = 0; i < width; i++) {
     let row = [];
@@ -30,10 +30,10 @@ function initializeBoardState({width, height}: BoardProps) {
 }
 
 function initializePlayerLinkedList(players: Player[]) {
-  const head = <PlayerNode>{value: players[0]};
+  const head = players[0];
   let currNode = head;
   for (let i = 1; i < players.length; i++) {
-    let nextNode = <PlayerNode>{value: players[1]};
+    let nextNode = players[i];
     currNode.next = nextNode;
     currNode = nextNode;
   }

@@ -53,11 +53,7 @@ export interface Cell {
 
 export interface Player {
   id: number;
-}
-
-export interface PlayerNode {
-  value: Player;
-  next?: PlayerNode;
+  next?: Player;
 }
 
 export interface GameState {

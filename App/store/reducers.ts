@@ -6,13 +6,25 @@ import {
   GameActionTypes,
 } from './types';
 import {combineReducers} from 'redux';
-import {INITIAL_GAME_STATE, INITIAL_BOARD_STATE} from './initial_constants';
+import {
+  INITIAL_GAME_STATE,
+  INITIAL_BOARD_STATE,
+  initializeBoardState,
+  BOARD_HEIGHT,
+  BOARD_WIDTH,
+} from './initial_constants';
 
 export function gameReducer(
   state = INITIAL_GAME_STATE,
   action: GameActionTypes,
 ): GameState {
   switch (action.type) {
+    case ActionTypes.CHANGE_PLAYER: {
+      return {
+        ...state,
+        currentPlayer: action.payload,
+      };
+    }
     default:
       return state;
   }
@@ -30,8 +42,9 @@ export function boardReducer(
       };
     }
     case ActionTypes.RESET_BOARD: {
+      console.log('Reset Board Reducer called');
       return {
-        ...INITIAL_BOARD_STATE,
+        data: initializeBoardState({width: BOARD_WIDTH, height: BOARD_HEIGHT}),
       };
     }
     default:
